@@ -9,25 +9,27 @@
 <body>
     <h1>JSON</h1>
     <h2>JavaScript Object Notation</h2>
+    <ul id="users-container">
+
+    </ul>
     <script>
-        const user = {
-            id: 245, 
-            name: "Masud",
-            lover: {
-                name: "Jamila",
-                favFood: "pizza"
-            },
-            friendsAges: [12, 24, 29],
-            friendsName: ["Jamal", "Kamal", "Bimal"]
-        };
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(json => displayUser(json))
+        .catch(error => console.log(error))
 
-        // js object to JSON
-        const userJSON = JSON.stringify(user);
-        console.log(userJSON);
+        function displayUser(users){
+            const userNames = users.map(user => user.username);
+            const ul = document.getElementById("users-container");
 
-        // JSON to js Object
-        const userFromJSON = JSON.parse(userJSON);
-        console.log(userFromJSON);
+            for (let i = 0; i < userNames.length; i++){
+                const username = userNames[i];
+                const li = document.createElement("li");
+                li.innerText = username;
+                ul.appendChild(li);
+            }
+        }
+
     </script>
 </body>
 </html>
